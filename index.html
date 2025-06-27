@@ -2,16 +2,15 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Game Tình Yêu 🥰</title>
+  <title>Game Trắc Nghiệm Tình Yêu 💘</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 30px;
-      background-color: #fff0f5;
-      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f0;
+      text-align: center;
+      padding: 20px;
     }
     h1 {
-      text-align: center;
       color: #d63384;
     }
     .question {
@@ -19,56 +18,19 @@
     }
     .gift {
       display: none;
-      text-align: center;
       margin-top: 30px;
-      animation: fadeIn 1s ease-in-out;
     }
-    #score {
-      font-weight: bold;
-      margin-top: 20px;
-      text-align: center;
-      color: #2d3436;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 30px;
-      font-size: 16px;
-      background-color: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #ff85c1;
-    }
-    img {
-      max-width: 200px;
-      margin-top: 15px;
-    }
-
-    /* Hiệu ứng trái tim */
     .heart {
       position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
-      animation: floatUp 3s ease-in forwards;
-      z-index: 9999;
+      animation: floatUp 3s ease-in infinite;
     }
     .heart::before,
     .heart::after {
-      content: '';
+      content: "";
       position: absolute;
       width: 20px;
       height: 20px;
@@ -83,117 +45,112 @@
       left: -10px;
       top: 0;
     }
-
     @keyframes floatUp {
       0% {
         opacity: 1;
-        transform: translateY(0) scale(1) rotate(45deg);
+        transform: translateY(0) rotate(45deg);
       }
       100% {
         opacity: 0;
-        transform: translateY(-200px) scale(1.5) rotate(45deg);
+        transform: translateY(-800px) rotate(45deg);
       }
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    button {
+      background-color: #d63384;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #ad296a;
     }
   </style>
 </head>
 <body>
-  <h1>Game Trắc Nghiệm Tình Yêu 💖</h1>
-  <form id="quiz-form">
+  <h1>💌 Trắc nghiệm tình yêu nè 💌</h1>
+  <form id="quizForm">
     <div class="question">
-      <label>1. Món bún mà mình thích nhất là?</label>
-      <input type="text" name="q1" />
+      <label>1. Món bún mà mình thích nhất là?</label><br>
+      <input type="text" name="q1" required>
     </div>
     <div class="question">
-      <label>2. Ngày kỷ niệm yêu nhau là?</label>
-      <input type="text" name="q2" />
+      <label>2. Ngày kỷ niệm yêu nhau là?</label><br>
+      <input type="text" name="q2" required>
     </div>
     <div class="question">
-      <label>3. Lần gần nhất mình đi du lịch là ở đâu?</label>
-      <input type="text" name="q3" />
+      <label>3. Lần gần nhất mình đi du lịch là ở đâu?</label><br>
+      <input type="text" name="q3" required>
     </div>
     <div class="question">
-      <label>4. Quê nội của em ở đâu?</label>
-      <input type="text" name="q4" />
+      <label>4. Quê nội của em ở đâu?</label><br>
+      <input type="text" name="q4" required>
     </div>
     <div class="question">
-      <label>5. Giữa em và con Tin rơi xuống nước, anh cứu ai?</label>
-      <input type="text" name="q5" />
+      <label>5. Giữa em và con Tin rơi xuống nước, anh cứu ai?</label><br>
+      <input type="text" name="q5" required>
     </div>
-    <button type="button" onclick="submitQuiz()">Nộp bài</button>
+    <button type="submit">Nộp bài 💖</button>
   </form>
 
-  <div id="score"></div>
-
   <div class="gift" id="gift-box">
-    <h2>🎁 Ta đa, chúc mừng anh trả lời đúng, nhận quà nha!</h2>
-    <img src="https://cdn-icons-png.flaticon.com/512/2589/2589175.png" alt="Hộp quà trái tim" />
->
-    <p>Quét mã QR bên dưới để nhận phần thưởng nhé:</p>
-    <img id="qr-code" src="" alt="QR Code" />
+    <h2>🎉 Ta đa, chúc mừng anh trả lời đúng, nhận quà nha! 🎁</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/2589/2589175.png" alt="Hộp quà trái tim" style="width: 150px;">
+    <p>Chuẩn bị chuyển hướng đến món quà bất ngờ sau 5 giây nhé!</p>
   </div>
 
   <script>
-    function submitQuiz() {
-      const answers = {
-        q1: "bún cá trường sa",
-        q2: "31/10",
-        q3: "hồ đồng đò",
-        q4: "nam định",
-        q5: "em"
-      };
+    const answers = [
+      "bún cá trường sa",
+      "31/10",
+      "hồ đồng đò",
+      "nam định",
+      "em"
+    ];
 
+    document.getElementById("quizForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const form = event.target;
       let score = 0;
-      const form = document.forms["quiz-form"];
 
-      for (let key in answers) {
-        let userAnswer = form[key].value.trim().toLowerCase();
-        if (userAnswer === answers[key]) {
+      for (let i = 0; i < answers.length; i++) {
+        const userAnswer = form["q" + (i + 1)].value.trim().toLowerCase();
+        if (userAnswer === answers[i]) {
           score += 2;
         }
       }
 
-      document.getElementById("score").innerText = `Điểm số của bạn: ${score}/10`;
-
       if (score === 10) {
         showGift();
       } else {
-        document.getElementById("gift-box").style.display = "none";
+        alert("Bạn được " + score + "/10 điểm. Hãy thử lại nha 😘");
       }
-    }
+    });
 
     function showGift() {
       const giftBox = document.getElementById("gift-box");
-      const qrCode = document.getElementById("qr-code");
-
-      const qrValue = "HAPPY BIRTHDAY"; // mã QR tùy chỉnh
-      qrCode.src = `https://www.canva.com/design/DAGqG9HETTY/xvfA7me-vx6t3UVFTGV5hA/edit?utm_content=DAGqG9HETTY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton`;
-
       giftBox.style.display = "block";
 
       // Hiệu ứng trái tim
       for (let i = 0; i < 30; i++) {
         setTimeout(createHeart, i * 100);
       }
+
+      // Chuyển hướng sau 5 giây
+      setTimeout(() => {
+        window.location.href = "https://www.canva.com/design/DAGqG9HETTY/xvfA7me-vx6t3UVFTGV5hA/edit?utm_content=DAGqG9HETTY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton";
+      }, 5000);
     }
 
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.backgroundColor = getRandomColor();
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.background = "#" + Math.floor(Math.random()*16777215).toString(16);
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 3000);
-    }
-
-    function getRandomColor() {
-      const colors = ["#e84393", "#ff7675", "#ff6b81", "#ff5252", "#fd79a8"];
-      return colors[Math.floor(Math.random() * colors.length)];
     }
   </script>
 </body>
