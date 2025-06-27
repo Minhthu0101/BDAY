@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Tình Yêu 🥰</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      background-color: #fff0f5;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      color: #d63384;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .gift {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #score {
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+      color: #2d3436;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff85c1;
+    }
+    img {
+      max-width: 200px;
+      margin-top: 15px;
+    }
+
+    /* Hiệu ứng trái tim */
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 3s ease-in forwards;
+      z-index: 9999;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.5) rotate(45deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <h1>Game Trắc Nghiệm Tình Yêu 💖</h1>
+  <form id="quiz-form">
+    <div class="question">
+      <label>1. Món bún mà mình thích nhất là?</label>
+      <input type="text" name="q1" />
+    </div>
+    <div class="question">
+      <label>2. Ngày kỷ niệm yêu nhau là?</label>
+      <input type="text" name="q2" />
+    </div>
+    <div class="question">
+      <label>3. Lần gần nhất mình đi du lịch là ở đâu?</label>
+      <input type="text" name="q3" />
+    </div>
+    <div class="question">
+      <label>4. Quê nội của em ở đâu?</label>
+      <input type="text" name="q4" />
+    </div>
+    <div class="question">
+      <label>5. Giữa em và con Tin rơi xuống nước, anh cứu ai?</label>
+      <input type="text" name="q5" />
+    </div>
+    <button type="button" onclick="submitQuiz()">Nộp bài</button>
+  </form>
+
+  <div id="score"></div>
+
+  <div class="gift" id="gift-box">
+    <h2>🎁 Ta đa, chúc mừng anh trả lời đúng, nhận quà nha!</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/764/764197.png" alt="Hộp quà" />
+    <p>Quét mã QR bên dưới để nhận phần thưởng nè:</p>
+    <img id="qr-code" src="" alt="QR Code" />
+  </div>
+
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: "bún cá trường sa",
+        q2: "31/10",
+        q3: "hồ đồng đò",
+        q4: "nam định",
+        q5: "em"
+      };
+
+      let score = 0;
+      const form = document.forms["quiz-form"];
+
+      for (let key in answers) {
+        let userAnswer = form[key].value.trim().toLowerCase();
+        if (userAnswer === answers[key]) {
+          score += 2;
+        }
+      }
+
+      document.getElementById("score").innerText = `Điểm số của bạn: ${score}/10`;
+
+      if (score === 10) {
+        showGift();
+      } else {
+        document.getElementById("gift-box").style.display = "none";
+      }
+    }
+
+    function showGift() {
+      const giftBox = document.getElementById("gift-box");
+      const qrCode = document.getElementById("qr-code");
+
+      const qrValue = "GIFT2025-VISSAI"; // mã QR tùy chỉnh
+      qrCode.src = `https://www.canva.com/design/DAGqG9HETTY/xvfA7me-vx6t3UVFTGV5hA/edit?utm_content=DAGqG9HETTY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton`;
+
+      giftBox.style.display = "block";
+
+      // Hiệu ứng trái tim
+      for (let i = 0; i < 30; i++) {
+        setTimeout(createHeart, i * 100);
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.backgroundColor = getRandomColor();
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    function getRandomColor() {
+      const colors = ["#e84393", "#ff7675", "#ff6b81", "#ff5252", "#fd79a8"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>
