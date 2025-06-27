@@ -132,8 +132,6 @@
   <div class="gift" id="gift-box">
     <h2>🎁 Ta đa, chúc mừng anh trả lời đúng, nhận quà nha!</h2>
     <img src="https://cdn-icons-png.flaticon.com/512/2589/2589175.png" alt="Hộp quà trái tim" />
-    <p>Quét mã QR bên dưới để nhận phần thưởng nè:</p>
-   <img id="qr-code" src="https://minhthu0101.github.io/BDAY/website_qrcode.png" alt="QR Code" style="max-width: 200px;" />
   </div>
 
   <script>
@@ -164,22 +162,20 @@
         document.getElementById("gift-box").style.display = "none";
       }
     }
-
     function showGift() {
-      const giftBox = document.getElementById("gift-box");
-      const qrCode = document.getElementById("qr-code");
+  const giftBox = document.getElementById("gift-box");
+  giftBox.style.display = "block";
 
-      const qrValue = "HAPPY BIRTHDAY"; // mã QR tùy chỉnh
-      qrCode.src = `https://www.canva.com/design/DAGqG9HETTY/xvfA7me-vx6t3UVFTGV5hA/edit?utm_content=DAGqG9HETTY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton`;
+  // Hiệu ứng trái tim bay
+  for (let i = 0; i < 30; i++) {
+    setTimeout(createHeart, i * 100);
+  }
 
-      giftBox.style.display = "block";
-
-      // Hiệu ứng trái tim
-      for (let i = 0; i < 30; i++) {
-        setTimeout(createHeart, i * 100);
-      }
-    }
-
+  // Chuyển hướng sau 5 giây
+  setTimeout(() => {
+    window.location.href = "https://www.canva.com/design/DAGqG9HETTY/xvfA7me-vx6t3UVFTGV5hA/edit?utm_content=DAGqG9HETTY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton";
+  }, 5000);
+}
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
